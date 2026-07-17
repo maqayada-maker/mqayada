@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "منصة مقايضة"
+version = "1.0.0"
+id = "artifacts/mqayada"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 25243
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/mqayada run dev"
+
+[services.env]
+PORT = "25243"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/mqayada", "run", "build"]
+publicDir = "artifacts/mqayada/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: منصة مقايضة - Finance Swap Platform API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: requests
+    description: Financing requests from users
+  - name: offers
+    description: Offers from financial advisors
+  - name: advisors
+    description: Financial advisor operations
+  - name: admin
+    description: Admin operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /requests:
+    get:
+      operationId: listRequests
+      tags: [requests]
+      summary: List all financing requests
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, active, approved, closed]
+      responses:
+        "200":
+          description: List of requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FinancingRequest"
+    post:
+      operationId: createRequest
+      tags: [requests]
+      summary: Submit a new financing request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRequestInput"
+      responses:
+        "201":
+          description: Request created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancingRequest"
+
+  /requests/{id}:
+    get:
+      operationId: getRequest
+      tags: [requests]
+      summary: Get a single financing request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Request details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FinancingRequest"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /requests/{id}/offers:
+    get:
+      operationId: getRequestOffers
+      tags: [offers]
+      summary: Get all offers for a request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+    post:
+      operationId: submitOffer
+      tags: [offers]
+      summary: Submit an offer for a request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOfferInput"
+      responses:
+        "201":
+          description: Offer submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /offers/{id}/accept:
+    post:
+      operationId: acceptOffer
+      tags: [offers]
+      summary: Accept an offer (user action)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Offer accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /offers/{id}/approve:
+    post:
+      operationId: approveOffer
+      tags: [admin]
+      summary: Admin approves a deal after user accepts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deal approved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /advisors:
+    get:
+      operationId: listAdvisors
+      tags: [advisors]
+      summary: List all certified advisors
+      responses:
+        "200":
+          description: List of advisors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Advisor"
+    post:
+      operationId: registerAdvisor
+      tags: [advisors]
+      summary: Register as a financial advisor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAdvisorInput"
+      responses:
+        "201":
+          description: Advisor registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Advisor"
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [admin]
+      summary: Get platform statistics
+      responses:
+        "200":
+          description: Platform stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformStats"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    FinancingRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        phone:
+          type: string
+        employer:
+          type: string
+        salary:
+          type: number
+        currentDebt:
+          type: number
+        remainingMonths:
+          type: integer
+        bankName:
+          type: string
+        sector:
+          type: string
+        financingPurpose:
+          type: string
+        financingType:
+          type: string
+        preferredFeature:
+          type: string
+        notes:
+          type: string
+        status:
+          type: string
+          enum: [pending, active, approved, closed]
+        offersCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - fullName
+        - phone
+        - employer
+        - salary
+        - currentDebt
+        - remainingMonths
+        - bankName
+        - status
+        - offersCount
+        - createdAt
+
+    CreateRequestInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+        phone:
+          type: string
+        employer:
+          type: string
+        sector:
+          type: string
+        financingPurpose:
+          type: string
+        financingType:
+          type: string
+        salary:
+          type: number
+        currentDebt:
+          type: number
+        remainingMonths:
+          type: integer
+        bankName:
+          type: string
+        notes:
+          type: string
+        preferredFeature:
+          type: string
+      required:
+        - fullName
+        - employer
+        - salary
+        - currentDebt
+        - remainingMonths
+
+    Offer:
+      type: object
+      properties:
+        id:
+          type: integer
+        requestId:
+          type: integer
+        advisorId:
+          type: integer
+        advisorName:
+          type: string
+        advisorCompany:
+          type: string
+        profitRate:
+          type: number
+        monthlyInstallment:
+          type: number
+        totalAmount:
+          type: number
+        durationMonths:
+          type: integer
+        notes:
+          type: string
+        status:
+          type: string
+          enum: [pending, client_accepted, accepted, approved, rejected]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - requestId
+        - advisorId
+        - advisorName
+        - advisorCompany
+        - profitRate
+        - monthlyInstallment
+        - totalAmount
+        - durationMonths
+        - status
+        - createdAt
+
+    CreateOfferInput:
+      type: object
+      properties:
+        advisorId:
+          type: integer
+        profitRate:
+          type: number
+        monthlyInstallment:
+          type: number
+        totalAmount:
+          type: number
+        durationMonths:
+          type: integer
+        notes:
+          type: string
+      required:
+        - advisorId
+        - profitRate
+        - monthlyInstallment
+        - totalAmount
+        - durationMonths
+
+    Advisor:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        licenseNumber:
+          type: string
+        offersCount:
+          type: integer
+        successRate:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - company
+        - phone
+        - licenseNumber
+        - offersCount
+        - successRate
+        - createdAt
+
+    CreateAdvisorInput:
+      type: object
+      properties:
+        name:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        licenseNumber:
+          type: string
+      required:
+        - name
+        - company
+        - phone
+        - licenseNumber
+
+    PlatformStats:
+      type: object
+      properties:
+        totalRequests:
+          type: integer
+        totalOffers:
+          type: integer
+        totalAdvisors:
+          type: integer
+        approvedDeals:
+          type: integer
+        pendingRequests:
+          type: integer
+      required:
+        - totalRequests
+        - totalOffers
+        - totalAdvisors
+        - approvedDeals
+        - pendingRequests

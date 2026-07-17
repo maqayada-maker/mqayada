@@ -1,0 +1,31 @@
+kind = "slides"
+previewPath = "/amd-2026/"
+title = "مقايضة — امد 2026"
+version = "1.0.0"
+id = "artifacts/amd-2026"
+router = "path"
+
+[[integratedSkills]]
+name = "slides"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/amd-2026/" ]
+localPort = 26016
+
+[services.development]
+run = "pnpm --filter @workspace/amd-2026 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/amd-2026", "run", "build" ]
+publicDir = "artifacts/amd-2026/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26016"
+BASE_PATH = "/amd-2026/"

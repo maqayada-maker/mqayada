@@ -1,0 +1,154 @@
+[
+  {
+    "id": "cover",
+    "position": 1,
+    "filepath": "src/pages/slides/Cover.tsx",
+    "title": "الغلاف",
+    "description": "غلاف العرض: مقايضة — السوق الرقمي العكسي لإعادة تمويل وهيكلة الديون في المملكة.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "executive-summary",
+    "position": 2,
+    "filepath": "src/pages/slides/ExecutiveSummary.tsx",
+    "title": "الملخص التنفيذي",
+    "description": "خمس نقاط تلخّص الفكرة والسوق ونموذج الدخل والوضع التنظيمي.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "problem",
+    "position": 3,
+    "filepath": "src/pages/slides/Problem.tsx",
+    "title": "المشكلة",
+    "description": "إعادة التمويل اليوم مكلفة وغير شفافة ومنحازة لمصلحة المموّل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "solution",
+    "position": 4,
+    "filepath": "src/pages/slides/Solution.tsx",
+    "title": "الحل",
+    "description": "مقايضة تحوّل التمويل إلى سوق عكسي تتنافس فيه الجهات على العميل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "how-it-works",
+    "position": 5,
+    "filepath": "src/pages/slides/HowItWorks.tsx",
+    "title": "كيف تعمل",
+    "description": "أربع خطوات من الطلب إلى إتمام إعادة التمويل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "product",
+    "position": 6,
+    "filepath": "src/pages/slides/Product.tsx",
+    "title": "المنتج",
+    "description": "منصة محايدة تخدم طرفي السوق عبر بوابتي العميل والجهة التمويلية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "product-screens",
+    "position": 7,
+    "filepath": "src/pages/slides/ProductScreens.tsx",
+    "title": "لمحة من المنتج",
+    "description": "لقطات حيّة من واجهات مقايضة: عروض العميل، المستشار، المشرف، وحاسبة التمويل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "market-size",
+    "position": 8,
+    "filepath": "src/pages/slides/MarketSize.tsx",
+    "title": "حجم السوق",
+    "description": "محفظة قابلة لإعادة التمويل تتجاوز 570 مليار ريال (TAM/SAM/SOM).",
+    "speakerNotes": ""
+  },
+  {
+    "id": "why-now",
+    "position": 9,
+    "filepath": "src/pages/slides/WhyNow.tsx",
+    "title": "لماذا الآن",
+    "description": "نمو الائتمان وتوسّع التقنية المالية يخلقان لحظة الإطلاق المثالية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "business-model",
+    "position": 10,
+    "filepath": "src/pages/slides/BusinessModel.tsx",
+    "title": "نموذج العمل",
+    "description": "مصدرا دخل: عمولة نجاح من الجهة التمويلية واشتراكات، بلا رسوم على العميل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "unit-economics",
+    "position": 11,
+    "filepath": "src/pages/slides/UnitEconomics.tsx",
+    "title": "اقتصاديات الوحدة",
+    "description": "سيناريو توضيحي: كل صفقة ناجحة تولّد عائداً موجباً بهامش مرتفع.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "projections",
+    "position": 12,
+    "filepath": "src/pages/slides/Projections.tsx",
+    "title": "التوقعات المالية",
+    "description": "مسار نمو من المرحلة التجريبية إلى التعادل في السنة الثالثة (توقعات).",
+    "speakerNotes": ""
+  },
+  {
+    "id": "competition",
+    "position": 13,
+    "filepath": "src/pages/slides/Competition.tsx",
+    "title": "المنافسة",
+    "description": "مصفوفة مقارنة تُظهر تموضع مقايضة المتمايز عبر خمسة معايير.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "go-to-market",
+    "position": 14,
+    "filepath": "src/pages/slides/GoToMarket.tsx",
+    "title": "خطة الدخول للسوق",
+    "description": "إطلاق مرحلي يبدأ بشراكات الجهات التمويلية ثم التوسّع الرقمي.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "compliance",
+    "position": 15,
+    "filepath": "src/pages/slides/Compliance.tsx",
+    "title": "الامتثال التنظيمي",
+    "description": "مسار امتثال واضح عبر البيئة التشريعية التجريبية للبنك المركزي.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "technology",
+    "position": 16,
+    "filepath": "src/pages/slides/Technology.tsx",
+    "title": "التقنية",
+    "description": "بنية سحابية آمنة قائمة على المطابقة الفورية وإخفاء الهوية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "risks",
+    "position": 17,
+    "filepath": "src/pages/slides/Risks.tsx",
+    "title": "المخاطر والتخفيف",
+    "description": "المخاطر الجوهرية الخمس ولكلٍّ منها إجراء تخفيف قائم.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "vision-2030",
+    "position": 18,
+    "filepath": "src/pages/slides/Vision2030.tsx",
+    "title": "الأثر ورؤية 2030",
+    "description": "مقايضة ترفع الشمول المالي وتعزّز التنافسية وفق رؤية 2030.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "closing",
+    "position": 19,
+    "filepath": "src/pages/slides/Closing.tsx",
+    "title": "الخاتمة",
+    "description": "خاتمة العرض ومعلومات التواصل: حين تتنافس الجهات، يربح العميل.",
+    "speakerNotes": ""
+  }
+]

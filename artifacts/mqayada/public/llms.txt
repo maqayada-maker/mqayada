@@ -1,0 +1,30 @@
+# مقايضة (Maqayada)
+
+> منصة سعودية متخصصة في مقارنة عروض التمويل العقاري ومتابعة المستشارين الماليين المعتمدين.
+> A Saudi Arabic-language platform for comparing home-financing offers and tracking certified financial advisors.
+
+## Primary Audience
+Arabic-speaking individuals in Saudi Arabia seeking home financing, mortgage comparison, and guidance from certified advisors.
+
+## Language
+Arabic (primary), site UI is fully Arabic.
+
+## Key Public Pages
+
+- Home / Landing: https://maqayada.com/
+- Annual Offers (عروض سنوية): https://maqayada.com/annual-offers
+- Advisor Standards (معايير المستشارين): https://maqayada.com/advisor-standards
+- Disclaimer (إخلاء المسؤولية): https://maqayada.com/disclaimer
+- Privacy Policy (سياسة الخصوصية): https://maqayada.com/privacy
+- Terms of Use (شروط الاستخدام): https://maqayada.com/terms
+
+## What This Site Covers
+- Comparison of Saudi home-financing and mortgage offers from certified advisors
+- Standards and credentials required for financial advisors on the platform
+- Legal disclosures, privacy policy, and terms of use
+- User portal for submitting and tracking financing requests
+
+## What This Site Does Not Cover
+- Real estate listings or property sales
+- Banking services directly
+- Non-Saudi markets

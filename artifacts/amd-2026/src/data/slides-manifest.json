@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cover",
+    "position": 1,
+    "filepath": "src/pages/slides/Slide1.tsx",
+    "title": "الغلاف",
+    "description": "غلاف عرض «مقايضة» المقدّم لمسابقة امد 2026 مع اسم المشروع والفريق.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "team",
+    "position": 2,
+    "filepath": "src/pages/slides/Slide2.tsx",
+    "title": "أعضاء الفريق",
+    "description": "تعريف بأعضاء فريق العمل على المشروع.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "toc",
+    "position": 3,
+    "filepath": "src/pages/slides/Slide3.tsx",
+    "title": "المحتويات",
+    "description": "فهرس أقسام العرض الرئيسية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "problem-solution",
+    "position": 4,
+    "filepath": "src/pages/slides/Slide4.tsx",
+    "title": "المشكلة وحلّها",
+    "description": "مشكلة إعادة هيكلة الديون والحل عبر سوقٍ عكسي يحفظ خصوصية العميل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "data-used",
+    "position": 5,
+    "filepath": "src/pages/slides/Slide5.tsx",
+    "title": "البيانات المستخدمة",
+    "description": "مصادر البيانات ومعالجتها والتحديات وأنواعها الرئيسية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "tech-stack",
+    "position": 6,
+    "filepath": "src/pages/slides/Slide6.tsx",
+    "title": "التقنيات المستخدمة",
+    "description": "الحزمة التقنية: الواجهة والخادم وقاعدة البيانات والذكاء الاصطناعي والأمان.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "idea",
+    "position": 7,
+    "filepath": "src/pages/slides/Slide7.tsx",
+    "title": "وصف الفكرة",
+    "description": "شرح فكرة السوق العكسي لإعادة هيكلة التمويل.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "differentiation",
+    "position": 8,
+    "filepath": "src/pages/slides/Slide15.tsx",
+    "title": "لماذا نحن مختلفون",
+    "description": "مقارنة تُبرز تمايز منصة مقايضة عن القنوات التقليدية مع مثال محسوب للتوفير.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "data-provisioning",
+    "position": 9,
+    "filepath": "src/pages/slides/Slide8.tsx",
+    "title": "توفير البيانات واستخدامها",
+    "description": "كيف تُجمع بيانات العميل وتُطابق وتُحلَّل لاتخاذ القرار.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "alignment",
+    "position": 10,
+    "filepath": "src/pages/slides/Slide9.tsx",
+    "title": "مواءمة الفكرة",
+    "description": "توافق الفكرة مع محاور الابتكار المالي والتقني في المسابقة.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "summary",
+    "position": 11,
+    "filepath": "src/pages/slides/Slide10.tsx",
+    "title": "ملخص",
+    "description": "ملخّص موجز للمنصة وأهدافها.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "testing",
+    "position": 12,
+    "filepath": "src/pages/slides/Slide11.tsx",
+    "title": "الاختبار والتحقق",
+    "description": "النموذج الأوّلي العامل والرحلة الكاملة التي يغطّيها.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "demo",
+    "position": 13,
+    "filepath": "src/pages/slides/Slide12.tsx",
+    "title": "العرض التوضيحي",
+    "description": "البوابات والأدوات العاملة في النموذج الحالي.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "challenges-roadmap",
+    "position": 14,
+    "filepath": "src/pages/slides/Slide13.tsx",
+    "title": "التحديات والخطط المستقبلية",
+    "description": "ما نحتاج إليه من دعم، والتحديات، وخارطة الطريق المستقبلية.",
+    "speakerNotes": ""
+  },
+  {
+    "id": "thanks",
+    "position": 15,
+    "filepath": "src/pages/slides/Slide14.tsx",
+    "title": "شكراً",
+    "description": "شريحة الختام والشكر.",
+    "speakerNotes": ""
+  }
+]
