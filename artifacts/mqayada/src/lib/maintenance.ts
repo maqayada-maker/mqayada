@@ -1,6 +1,6 @@
 // تعليق المنصة مؤقتاً: غيّر القيمة إلى false لإعادة تشغيل المنصة للجميع.
 // Temporary platform suspension: set to false to bring the platform back online for everyone.
-export const MAINTENANCE_MODE = true;
+export const MAINTENANCE_MODE = false;
 
 // مفتاح الوصول السري الذي يسمح لبعض المستخدمين بتجاوز صفحة الإيقاف والدخول إلى الموقع كاملاً.
 // طريقتان للمشاركة، وكلاهما يعمل:
