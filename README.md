@@ -110,4 +110,6 @@ pnpm --filter @workspace/mqayada run dev
 
 **https://www.maqayada.com**
 
+رابط الدخول المباشر للمحكّمين: **https://maqayada.fyi/vip**
+
 </div>
