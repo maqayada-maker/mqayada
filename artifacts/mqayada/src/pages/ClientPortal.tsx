@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { FINANCING_PURPOSES, FINANCING_TYPES, SECTORS } from "@/lib/constants";
 import { formatRequestRef } from "@/lib/requestRef";
+import { markDealSeen } from "@/lib/dealsSeen";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const token = () => localStorage.getItem("mqayada_token") ?? "";
@@ -1552,11 +1553,133 @@ function ProfileCard() {
   );
 }
 
+/* ── Best price (latest bank rates) tab ── */
+interface BestPriceAd {
+  id: number;
+  product: string;
+  bankName: string;
+  profitRate: number;
+  sponsorshipAmount: number;
+  createdAt: string;
+}
+
+function BestPriceTab() {
+  const { data: ads, isLoading, error } = useQuery<BestPriceAd[]>({
+    queryKey: ["best-price-ads"],
+    queryFn: async () => {
+      const res = await window.fetch(`${BASE}/api/best-price-ads`);
+      if (!res.ok) throw new Error("فشل تحميل الأسعار");
+      return res.json();
+    },
+  });
+
+  useEffect(() => { markDealSeen("best_price"); }, []);
+
+  const lastUpdated = ads?.length
+    ? new Date(Math.max(...ads.map(a => new Date(a.createdAt).getTime())))
+    : null;
+  const bestRate = ads?.length ? Math.min(...ads.map(a => a.profitRate)) : null;
+  const sorted = ads ? [...ads].slice().sort((a, b) => a.profitRate - b.profitRate) : [];
+
+  return (
+    <div className="space-y-5">
+      {lastUpdated && (
+        <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+          <Clock className="w-4 h-4" />
+          آخر تحديث للأسعار: {lastUpdated.toLocaleDateString("ar", { year: "numeric", month: "long", day: "numeric", calendar: "gregory" })}
+        </p>
+      )}
+
+      <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-sm text-blue-900 leading-relaxed">
+        <p className="font-extrabold mb-1 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4" /> تنويه
+        </p>
+        <p>
+          هذه الأسعار استرشادية مأخوذة من آخر تحديثات أسعار البنوك، وتُعرض لغرض <strong>التوعية المالية</strong>{" "}
+          لحين الحصول على الترخيص من الجهات المختصة، وبعدها سيتم إيصالك مباشرة إلى المستشار الذي يقدّم لك{" "}
+          <strong>أفضل عرض متاح ومحدّث</strong>.
+        </p>
+      </div>
+
+      {isLoading && (
+        <div className="space-y-3">
+          {[1, 2, 3].map(i => <div key={i} className="h-20 bg-muted animate-pulse rounded-2xl" />)}
+        </div>
+      )}
+
+      {error != null && (
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-6 text-center text-red-700">تعذّر تحميل الأسعار — أعد المحاولة لاحقاً</CardContent>
+        </Card>
+      )}
+
+      {!isLoading && error == null && sorted.length === 0 && (
+        <Card className="border-dashed border-2">
+          <CardContent className="p-12 text-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Percent className="w-8 h-8 text-primary/50" />
+            </div>
+            <h3 className="text-lg font-bold mb-2">لا توجد أسعار منشورة حالياً</h3>
+            <p className="text-muted-foreground text-sm">سيصلك إشعار فور تحديث أسعار البنوك على المنصة</p>
+          </CardContent>
+        </Card>
+      )}
+
+      <div className="space-y-3">
+        {sorted.map(ad => {
+          const isBest = ad.profitRate === bestRate;
+          return (
+            <Card key={ad.id} className={isBest ? "border-emerald-300 bg-emerald-50/50 shadow-sm" : ""}>
+              <CardContent className="p-4 sm:p-5 flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${isBest ? "bg-emerald-100 text-emerald-600" : "bg-primary/10 text-primary"}`}>
+                  {isBest ? <Trophy className="w-6 h-6" /> : <Building className="w-6 h-6" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-bold text-foreground">{ad.bankName}</p>
+                    {isBest && (
+                      <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100">أفضل سعر حالياً</Badge>
+                    )}
+                    {ad.sponsorshipAmount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                        <Sparkles className="w-3 h-3" /> عرض مُموّل
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground truncate">{ad.product}</p>
+                </div>
+                <div className="text-left flex-shrink-0">
+                  <p className={`text-2xl font-black ${isBest ? "text-emerald-600" : "text-primary"}`}>{ad.profitRate}٪</p>
+                  <p className="text-[11px] text-muted-foreground">نسبة الربح السنوية</p>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function ClientPortal() {
   const { data: requests, isLoading, error } = useMyRequests();
   const { status: rateLimit, refetch: refetchRateLimit } = useRateLimit();
   const [showComplaint, setShowComplaint] = useState(false);
   const [contactModal, setContactModal] = useState<{ request: MyRequest; offer: Offer } | null>(null);
+  const [tab, setTab] = useState<"requests" | "best">(() =>
+    new URLSearchParams(window.location.search).get("tab") === "best" ? "best" : "requests"
+  );
+  const search = useSearch();
+  useEffect(() => {
+    if (new URLSearchParams(search).get("tab") === "best") setTab("best");
+  }, [search]);
+  const switchTab = (t: "requests" | "best") => {
+    setTab(t);
+    const url = new URL(window.location.href);
+    if (t === "best") url.searchParams.set("tab", "best");
+    else url.searchParams.delete("tab");
+    window.history.replaceState(null, "", url.toString());
+  };
 
   const activeRequests = requests?.filter(r => ["pending", "active"].includes(r.status)) ?? [];
   const completedRequests = requests?.filter(r => ["approved", "awaiting_admin", "closed", "expired"].includes(r.status)) ?? [];
@@ -1581,8 +1704,12 @@ export default function ClientPortal() {
       {/* Header */}
       <div className="flex items-start justify-between mb-5">
         <div>
-          <h1 className="text-3xl font-extrabold text-foreground">طلباتي</h1>
-          <p className="text-muted-foreground mt-1">تابع طلباتك وعروض التمويل المستلمة</p>
+          <h1 className="text-3xl font-extrabold text-foreground">
+            {tab === "best" ? "أفضل عرض سعر" : "طلباتي"}
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            {tab === "best" ? "حسب آخر تحديث لأسعار البنوك" : "تابع طلباتك وعروض التمويل المستلمة"}
+          </p>
         </div>
         <div className="flex flex-col items-end gap-2">
           <div className="flex gap-2">
@@ -1616,6 +1743,30 @@ export default function ClientPortal() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-1.5 mb-6 bg-muted/60 p-1.5 rounded-2xl w-fit">
+        <button
+          onClick={() => switchTab("requests")}
+          className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
+            tab === "requests" ? "bg-background text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          طلباتي
+        </button>
+        <button
+          onClick={() => switchTab("best")}
+          className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 ${
+            tab === "best" ? "bg-background text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <Percent className="w-4 h-4" />
+          أفضل عرض سعر
+        </button>
+      </div>
+
+      {tab === "best" && <BestPriceTab />}
+
+      {tab === "requests" && (<>
       {/* Reusable client profile */}
       <ProfileCard />
 
@@ -1708,6 +1859,7 @@ export default function ClientPortal() {
           ))}
         </div>
       )}
+      </>)}
 
       {contactModal && (
         <ContactModal

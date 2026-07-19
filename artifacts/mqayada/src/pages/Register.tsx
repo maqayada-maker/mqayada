@@ -255,9 +255,14 @@ export default function Register() {
                   ))}
                 </div>
                 {role === "advisor" && (
-                  <p className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mt-2 text-center font-medium">
-                    سيخضع حسابك لمراجعة الإدارة قبل تفعيله
-                  </p>
+                  <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5 mt-2 text-center font-medium space-y-1.5 leading-relaxed">
+                    <p className="font-extrabold">تنويه بشأن قبول المستشارين</p>
+                    <p>
+                      سيتم فتح باب القبول للمستشارين بعد الحصول على التراخيص اللازمة من الجهات المختصة.
+                      المنصة حالياً في مرحلة التوعية المالية والمشاركة في المسابقات المالية في المملكة العربية السعودية.
+                    </p>
+                    <p>سيخضع حسابك لمراجعة الإدارة قبل تفعيله.</p>
+                  </div>
                 )}
               </div>
 

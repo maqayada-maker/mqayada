@@ -94,7 +94,7 @@ router.get("/notifications/badge", async (req, res) => {
           ...(Number(newOffers) > 0 ? [{ type: "offers", count: Number(newOffers), label: "طلبات لديها عروض جديدة للمراجعة", link: "/client" }] : []),
           ...(Number(approved) > 0 ? [{ type: "approved", count: Number(approved), label: "طلبات تمّ اعتمادها — تواصل مع المستشار", link: "/client" }] : []),
           ...(Number(newAnnual) > 0 ? [{ type: "annual_offers", count: Number(newAnnual), label: "عروض سنوية جديدة من البنوك", link: "/annual-offers" }] : []),
-          ...(Number(newBest) > 0 ? [{ type: "best_price", count: Number(newBest), label: "أفضل الأسعار المعلَنة من البنوك", link: "/" }] : []),
+          ...(Number(newBest) > 0 ? [{ type: "best_price", count: Number(newBest), label: "أسعار جديدة — أفضل عرض سعر حسب آخر تحديث", link: "/client?tab=best" }] : []),
         ],
       });
     }
