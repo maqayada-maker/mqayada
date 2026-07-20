@@ -15,6 +15,7 @@ import {
 import { FINANCING_PURPOSES, FINANCING_TYPES, SECTORS } from "@/lib/constants";
 import { formatRequestRef } from "@/lib/requestRef";
 import { markDealSeen } from "@/lib/dealsSeen";
+import { SavingsCalculator, TargetRateCard, RateHistoryChart } from "@/components/BestPriceExtras";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const token = () => localStorage.getItem("mqayada_token") ?? "";
@@ -1657,6 +1658,20 @@ function BestPriceTab() {
           );
         })}
       </div>
+
+      {/* Target rate alert — always available for clients */}
+      <TargetRateCard bestRate={bestRate} />
+
+      {/* Savings calculator linked to the live best rate */}
+      {bestRate !== null && sorted.length > 0 && (
+        <SavingsCalculator
+          bestRate={bestRate}
+          bestBank={sorted[0].bankName}
+        />
+      )}
+
+      {/* Rate history trend */}
+      <RateHistoryChart />
     </div>
   );
 }

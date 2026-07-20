@@ -25,6 +25,9 @@ import ClientPortal from "@/pages/ClientPortal";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import VerifyEmail from "@/pages/VerifyEmail";
+import Awareness from "@/pages/Awareness";
+import FAQ from "@/pages/FAQ";
+import FinancialHealth from "@/pages/FinancialHealth";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -55,6 +58,9 @@ function Router() {
           <Route path="/privacy" component={PrivacyPolicy} />
           <Route path="/terms" component={TermsOfUse} />
           <Route path="/advisor-standards" component={AdvisorStandards} />
+          <Route path="/awareness" component={Awareness} />
+          <Route path="/faq" component={FAQ} />
+          <Route path="/financial-health" component={FinancialHealth} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/verify-email" component={VerifyEmail} />

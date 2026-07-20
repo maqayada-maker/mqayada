@@ -1,9 +1,10 @@
 import { Router, type IRouter, type Request, type Response } from "express";
 import { db } from "@workspace/db";
-import { officialSponsorsTable, bestPriceAdsTable } from "@workspace/db/schema";
+import { officialSponsorsTable, bestPriceAdsTable, bankRateHistoryTable } from "@workspace/db/schema";
 import { eq, asc } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "./auth.js";
+import { notifyRateAlerts } from "./rate_alerts.js";
 
 const router: IRouter = Router();
 
@@ -124,6 +125,15 @@ router.post("/admin/best-price-ads", async (req, res) => {
       active: active === undefined ? true : !!active,
       sortOrder: Number(sortOrder) || 0,
     }).returning();
+    await db.insert(bankRateHistoryTable).values({
+      product: created.product,
+      bankName: created.bankName,
+      profitRate: created.profitRate,
+    });
+    if (created.active) {
+      notifyRateAlerts(Number(created.profitRate), created.bankName, created.product)
+        .catch((err) => console.error("[rate-alerts]", err));
+    }
     res.status(201).json(serAd(created));
   } catch (err) { console.error(err); res.status(500).json({ error: "Internal server error" }); }
 });
@@ -146,6 +156,17 @@ router.put("/admin/best-price-ads/:id", async (req, res) => {
   try {
     const [updated] = await db.update(bestPriceAdsTable).set(updates).where(eq(bestPriceAdsTable.id, id)).returning();
     if (!updated) return res.status(404).json({ error: "الإعلان غير موجود" });
+    if (updates.profitRate !== undefined) {
+      await db.insert(bankRateHistoryTable).values({
+        product: updated.product,
+        bankName: updated.bankName,
+        profitRate: updated.profitRate,
+      });
+      if (updated.active) {
+        notifyRateAlerts(Number(updated.profitRate), updated.bankName, updated.product)
+          .catch((err) => console.error("[rate-alerts]", err));
+      }
+    }
     res.json(serAd(updated));
   } catch (err) { console.error(err); res.status(500).json({ error: "Internal server error" }); }
 });

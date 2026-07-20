@@ -3,10 +3,10 @@ import { db } from "@workspace/db";
 import {
   financingRequestsTable, offersTable, advisorsTable,
   clientReportsTable, advisorReportsTable, adminNotificationsTable,
-  annualOffersTable, bestPriceAdsTable
+  annualOffersTable, bestPriceAdsTable, rateAlertsTable
 } from "@workspace/db/schema";
 import { pushSubscriptionsTable } from "@workspace/db/schema";
-import { count, eq, and, inArray, notInArray, sql, not, desc, or, isNull, gte, gt } from "drizzle-orm";
+import { count, eq, and, inArray, notInArray, sql, not, desc, or, isNull, gte, gt, lte } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "./auth.js";
 import { PUSH_ENABLED, getPublicKey } from "../lib/push.js";
@@ -86,8 +86,22 @@ router.get("/notifications/badge", async (req, res) => {
         .from(bestPriceAdsTable)
         .where(and(...bestConds));
 
+      // ── Target-rate alert: active ads at or below the client's target ──
+      let targetHit = 0;
+      const [alert] = await db.select().from(rateAlertsTable).where(eq(rateAlertsTable.userId, user.userId));
+      if (alert) {
+        const [{ hit }] = await db
+          .select({ hit: count() })
+          .from(bestPriceAdsTable)
+          .where(and(
+            eq(bestPriceAdsTable.active, true),
+            lte(bestPriceAdsTable.profitRate, alert.targetRate),
+          ));
+        targetHit = Number(hit);
+      }
+
       const total =
-        Number(newOffers) + Number(approved) + Number(newAnnual) + Number(newBest);
+        Number(newOffers) + Number(approved) + Number(newAnnual) + Number(newBest) + targetHit;
       return res.json({
         total,
         items: [
@@ -95,6 +109,7 @@ router.get("/notifications/badge", async (req, res) => {
           ...(Number(approved) > 0 ? [{ type: "approved", count: Number(approved), label: "طلبات تمّ اعتمادها — تواصل مع المستشار", link: "/client" }] : []),
           ...(Number(newAnnual) > 0 ? [{ type: "annual_offers", count: Number(newAnnual), label: "عروض سنوية جديدة من البنوك", link: "/annual-offers" }] : []),
           ...(Number(newBest) > 0 ? [{ type: "best_price", count: Number(newBest), label: "أسعار جديدة — أفضل عرض سعر حسب آخر تحديث", link: "/client?tab=best" }] : []),
+          ...(targetHit > 0 ? [{ type: "target_rate", count: targetHit, label: "🎯 عروض وصلت لسعرك المستهدف", link: "/client?tab=best" }] : []),
         ],
       });
     }

@@ -13,3 +13,5 @@ export * from "./official_sponsors";
 export * from "./best_price_ads";
 export * from "./admin_notifications";
 export * from "./push_subscriptions";
+export * from "./bank_rate_history";
+export * from "./rate_alerts";

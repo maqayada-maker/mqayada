@@ -13,6 +13,7 @@ import annualOffersRouter from "./annual_offers";
 import clientProfilesRouter from "./client_profiles";
 import homepageRouter from "./homepage";
 import aiRouter from "./ai";
+import rateAlertsRouter from "./rate_alerts";
 
 const router: IRouter = Router();
 
@@ -30,5 +31,6 @@ router.use(annualOffersRouter);
 router.use(clientProfilesRouter);
 router.use(homepageRouter);
 router.use(aiRouter);
+router.use(rateAlertsRouter);
 
 export default router;

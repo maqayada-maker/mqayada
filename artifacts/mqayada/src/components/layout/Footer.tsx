@@ -37,6 +37,9 @@ export function Footer() {
               <li><Link href="/register" className="hover:text-white transition-colors">إنشاء حساب</Link></li>
               <li><Link href="/apply" className="hover:text-white transition-colors">رفع طلب تمويل</Link></li>
               <li><Link href="/login" className="hover:text-white transition-colors">تتبع طلبك</Link></li>
+              <li><Link href="/awareness" className="hover:text-white transition-colors">ركن التوعية المالية</Link></li>
+              <li><Link href="/financial-health" className="hover:text-white transition-colors">مؤشر الصحة المالية</Link></li>
+              <li><Link href="/faq" className="hover:text-white transition-colors">الأسئلة الشائعة</Link></li>
               <li><Link href="/disclaimer" className="hover:text-white transition-colors">الشروط والأحكام</Link></li>
             </ul>
           </div>

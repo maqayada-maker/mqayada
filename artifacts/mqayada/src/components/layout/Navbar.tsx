@@ -145,6 +145,7 @@ export function Navbar() {
     { href: "/client", label: "طلباتي" },
     { href: "/apply", label: "ارفع طلبك" },
     { href: "/annual-offers", label: "العروض السنوية" },
+    { href: "/awareness", label: "التوعية المالية" },
   ];
 
   const advisorLinks = [
@@ -165,6 +166,8 @@ export function Navbar() {
   const guestLinks = [
     { href: "/", label: "الرئيسية" },
     { href: "/annual-offers", label: "العروض السنوية" },
+    { href: "/awareness", label: "التوعية المالية" },
+    { href: "/faq", label: "الأسئلة الشائعة" },
   ];
 
   const navItems =
